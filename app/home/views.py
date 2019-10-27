@@ -1,4 +1,4 @@
-#from . import home
+# from . import home
 from app.home import home
 from flask import render_template, redirect, url_for
 
@@ -62,3 +62,4 @@ def search():
 @home.route("/play/")
 def play():
     return render_template("home/play.html")
+

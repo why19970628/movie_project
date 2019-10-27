@@ -6,7 +6,7 @@
             padding-left: 3px;
         }
 </style>
-{%endblock%}
+{% endblock %}
 
 {% block content %}
 {% include "home/menu.html" %}
@@ -60,11 +60,11 @@
 {% endblock %}
 
 
-<% block js %>
+{% block js %}
 <script>
     $(document).ready(function () {
         $("#m-1").addClass("active");
     })
     </script>
-<% endblock %>
+{% endblock %}
 
