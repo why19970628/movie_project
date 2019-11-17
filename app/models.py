@@ -1,15 +1,6 @@
 ####创建数据库表
-from flask import Flask
 import datetime
-import pymysql
-from flask_sqlalchemy import SQLAlchemy
-
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:123456@localhost/movie'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-
-db = SQLAlchemy(app)
-
+from app import db
 
 # 会员
 class User(db.Model):
@@ -155,6 +146,10 @@ class Admin(db.Model):
     def __repr__(self):
         return "<Admin {}>".format(self.name)
 
+    def check_pwd(self,pwd):
+        from werkzeug.security import check_password_hash
+        return check_password_hash(self.pwd,pwd)
+
 
 # 管理员登陆日志
 class Adminlog(db.Model):
@@ -180,19 +175,18 @@ class Oplog(db.Model):
     def __repr__(self):
         return "<Oplog {}>".format(self.id)
 
-
-if __name__ == '__main__':
-    # db.create_all()  #建立表数据库
-    """
-    role=Role(name="超级管理员",auths="")
-    db.session.add(role)
-    db.session.commit()
-    """
-    from werkzeug.security import generate_password_hash
-
-    admin = Admin(name='wang',
-                  pwd=generate_password_hash("wang"),
-                  is_super=0,
-                  role_id=1)
-    db.session.add(admin)
-    db.session.commit()
+# if __name__ == '__main__':
+#     # db.create_all()  #建立表数据库
+#     """
+#     role=Role(name="超级管理员",auths="")
+#     db.session.add(role)
+#     db.session.commit()
+#     """
+#     from werkzeug.security import generate_password_hash
+#
+#     admin = Admin(name='wang',
+#                   pwd=generate_password_hash("wang"),
+#                   is_super=0,
+#                   role_id=1)
+#     db.session.add(admin)
+#     db.session.commit()
