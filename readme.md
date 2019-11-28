@@ -7,14 +7,24 @@
 |Author|:sunglasses:HenryWang:sunglasses:|
 |---|---
 |Email|:hearts:wanghuayang@thefifthera.com:hearts:
-CSDN|:hearts:https://blog.csdn.net/weixin_43746433/article/details/102761251 :
-hearts:
+CSDN|:hearts:https://blog.csdn.net/weixin_43746433/article/details/102761251
 Blog|:hearts:https://why19970628.github.io :hearts:
  
 ****
 ## :dolphin:声明
 ### 软件均仅用于学习交流，请勿用于任何商业用途！感谢大家！
 用Flask构建一个微电影视频网站。
+### 该项目为基于Python的Flask框架搭建的[在线电影网站]
+
+- **项目介绍**:网站前端采用HTML5编写，使用Bootstrap前端开发框架，后端使用Python3语言编写，以及Flask的Web框架，将MySQL作为数据库，开发工具使用PyCharm
+- 
+**网站功能**:网站前台模块具有浏览视频、搜索视频、筛选视频、登录注册、收藏评论等功能。后台模块具有对视频、用户、管理员等各类管理功能
+- 
+**项目文件**:整个movie_project目录
+- 
+**运行方法**:运行movie_project目录下的manage.py
+- 
+**nginx配置文件**:位于movie_project目录下的nginx.conf,用于部署到服务器进行反向代理的相关配置
 
 ## 为什么使用Flask？Python web框架大对比
 
@@ -206,7 +216,7 @@ pip3 install -r requirements.txt
 其实很简单，用pycharm很快就能搭建好我们需要的环境，同时安装好mysql，在IED中输入：
 ```
 python manage.py runserver
-
+```
 ## :dolphin:**总结**
 > **最后，如果你觉得这个项目不错或者对你有帮助，给个Star呗，也算是对我学习路上的一种鼓励！<br>
  哈哈哈，感谢大家！笔芯~**:cupid::cupid:
