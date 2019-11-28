@@ -3,13 +3,12 @@
 ![](https://img.shields.io/badge/Python-3.6.3-green.svg) ![](https://img.shields.io/badge/Flask-0.12.2-green.svg) ![](https://img.shields.io/badge/Flask_MySQLdb-0.2.0-green.svg) ![](https://img.shields.io/badge/Flask_SQLAlchemy-2.3.2-green.svg) ![](https://img.shields.io/badge/WTForms-2.1-green.svg) ![](https://img.shields.io/badge/Werkzeug-0.14.1-green.svg) ![](https://img.shields.io/badge/Flask_WTF-0.14.2-green.svg) ![](https://img.shields.io/badge/Flask_Script-2.0.6-green.svg)  
 ### 
 
-|Author|:sunglasses:王大阳:sunglasses:|
-|---|---|Email|:hearts:wanghuayang@thefifthera.com:hearts:
 
-|
-|---|---|CSDN|:https://blog.csdn.net/weixin_43746433/article/details/102761251:
-|
-|---|---|
+|Author|:sunglasses:HenryWang:sunglasses:|
+|---|---
+|Email|:hearts:wanghuayang@thefifthera.com:hearts:
+CSDN|:https://blog.csdn.net/weixin_43746433/article/details/102761251:
+
 Blog|:https://why19970628.github.io/:
  
 ****
