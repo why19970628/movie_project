@@ -1,11 +1,22 @@
-﻿# 基于Python电影网站系统
-## csdn: 
+﻿基于Python的Flask框架的在线电影网站系统 ![enter image description here](Pic/logo.png)
+===========================
+![](https://img.shields.io/badge/Python-3.6.3-green.svg) ![](https://img.shields.io/badge/Flask-0.12.2-green.svg) ![](https://img.shields.io/badge/Flask_MySQLdb-0.2.0-green.svg) ![](https://img.shields.io/badge/Flask_SQLAlchemy-2.3.2-green.svg) ![](https://img.shields.io/badge/WTForms-2.1-green.svg) ![](https://img.shields.io/badge/Werkzeug-0.14.1-green.svg) ![](https://img.shields.io/badge/Flask_WTF-0.14.2-green.svg) ![](https://img.shields.io/badge/Flask_Script-2.0.6-green.svg)  
+### 
+
+|Author|:sunglasses:王大阳:sunglasses:|
+|---|---
+|Email|:hearts:957177569@thefifthera.com:hearts:
+
+   
+### csdn: 
 https://blog.csdn.net/weixin_43746433/article/details/102761251
 
-## Blog: 
+### Blog: 
 https://why19970628.github.io/
-
-
+ 
+****
+## :dolphin:声明
+### 软件均仅用于学习交流，请勿用于任何商业用途！感谢大家！
 用Flask构建一个微电影视频网站。
 
 ## 为什么使用Flask？Python web框架大对比
@@ -186,10 +197,20 @@ from . improt admin
 | reason | 操作原因，字符串型   |
 | addtime| 添加时间，日期时间类型，默认为当前时间 |
 
+## :dolphin:安装依赖库
+```
+pip3 install -r requirements.txt
+```
+
+
+
 ## 运行本项目
 
 其实很简单，用pycharm很快就能搭建好我们需要的环境，同时安装好mysql，在IED中输入：
 ```
 python manage.py runserver
 
+## :dolphin:**总结**
+> **最后，如果你觉得这个项目不错或者对你有帮助，给个Star呗，也算是对我学习路上的一种鼓励！<br>
+ 哈哈哈，感谢大家！笔芯~**:cupid::cupid:
 

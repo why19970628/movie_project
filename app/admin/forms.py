@@ -40,3 +40,5 @@ class LoginForm(FlaskForm):
         admin = Admin.query.filter_by(name=account).count()
         if admin == 0:
             raise ValidationError("账号不存在! ")
+            #raise 当程序出现错误,python会自动引发异常,也可以通过raise显示地引发异常。
+            # 一旦执行了raise语句,raise后面的语句将不能执行

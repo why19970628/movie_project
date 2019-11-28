@@ -35,8 +35,6 @@ def login():
     后台登录
     """
     form = LoginForm()
-    da = form.account.errors
-    print(da)
     if form.validate_on_submit(): #表单数据
         data = form.data
         admin = Admin.query.filter_by(name=data["account"]).first()#查找admin
