@@ -212,7 +212,7 @@ pip3 install -r requirements.txt
 
 
 
-## 运行本项目
+## :dolphin:运行本项目
 
 其实很简单，用pycharm很快就能搭建好我们需要的环境，同时安装好mysql，在IED中输入：
 ```
@@ -222,3 +222,5 @@ python manage.py runserver
 > **最后，如果你觉得这个项目不错或者对你有帮助，给个Star呗，也算是对我学习路上的一种鼓励！<br>
  哈哈哈，感谢大家！笔芯~**:cupid::cupid:
 
+
+![enter image description here](Pic/time.gif)
