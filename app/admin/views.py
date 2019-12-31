@@ -1,7 +1,6 @@
 from . import admin
 from app.home import home
 from flask import render_template, redirect, url_for, flash, session, request
-# from app.admin.forms import LoginForm
 from forms import LoginForm, TagForm, MovieForm, PreviewForm, PwdForm
 from app.models import Admin, Tag, Movie, Preview, User, Comment, Moviecol, Oplog, Adminlog, Userlog
 from functools import wraps
@@ -319,6 +318,7 @@ def movie_del(id=None):
     movie = Movie.query.get_or_404(id)
     db.session.delete(movie)
     db.session.commit()
+    os.remove(app.config["UP_DIR"] + movie.url)  # 删除本地电影
     flash("电影删除成功", "ok")
     return redirect(url_for('admin.movie_list', page=1))
 
