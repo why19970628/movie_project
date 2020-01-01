@@ -1,9 +1,9 @@
 # from . import home
 from app.home import home
 from flask import render_template, url_for, redirect, flash, session, request, Response
-from app.models import User, Userlog, Preview, Tag, Movie, Comment
-from app.home.forms import RegistForm, LoginForm, UserdetailForm, PwdForm, CommentForm,RegistForm
-from app import db,app
+from app.models import User, Userlog, Preview, Tag, Movie, Comment, Moviecol
+from app.home.forms import RegistForm, LoginForm, UserdetailForm, PwdForm, CommentForm, RegistForm
+from app import db, app, rd
 from functools import wraps
 from werkzeug.security import generate_password_hash
 from werkzeug.utils import secure_filename
@@ -22,6 +22,7 @@ def user_login_req(f):
         return f(*args, **kwargs)
 
     return decorated_function
+
 
 def change_filename(filename):
     """
@@ -70,6 +71,7 @@ def logout():
     session.pop("user_id", None)
     return redirect(url_for('home.login'))
 
+
 @home.route("/register/", methods=["GET", "POST"])
 def regist():
     """
@@ -96,7 +98,7 @@ def regist():
 def user():
     form = UserdetailForm()
     user = User.query.get(int(session["user_id"]))
-    old_face=user.face
+    old_face = user.face
     form.face.validators = []
     if request.method == "GET":
         # 赋初值
@@ -114,7 +116,7 @@ def user():
             user.face = change_filename(file_face)
             form.face.data.save(app.config["FC_DIR"] + user.face)
             try:
-                os.remove(app.config["FC_DIR"]+old_face)
+                os.remove(app.config["FC_DIR"] + old_face)
             except:
                 pass
         name_count = User.query.filter_by(name=data["name"]).count()
@@ -202,10 +204,54 @@ def loginlog(page=None):
     return render_template("home/loginlog.html", page_data=page_data)
 
 
-@home.route("/moviecol/")
+@home.route("/moviecol/<int:page>/")
 @user_login_req
-def moviecol():
-    return render_template("home/moviecol.html")
+def moviecol(page=None):
+    """
+    电影收藏
+    """
+    if page is None:
+        page = 1
+    page_data = Moviecol.query.join(
+        Movie
+    ).join(
+        User
+    ).filter(
+        Movie.id == Moviecol.movie_id,
+        User.id == session["user_id"]
+    ).order_by(
+        Moviecol.addtime.desc()
+    ).paginate(page=page, per_page=2)
+    return render_template("home/moviecol.html", page_data=page_data)
+
+
+@home.route("/moviecol/add/", methods=["GET"])
+@user_login_req
+def moviecol_add():
+    pass
+    """
+    添加电影收藏
+    """
+    uid = request.args.get("uid", "")
+    mid = request.args.get("mid", "")
+    moviecol = Moviecol.query.filter_by(
+        user_id=int(uid),
+        movie_id=int(mid)
+    ).count()
+    # 已收藏
+    if moviecol == 1:
+        data = dict(ok=0)
+    # 未收藏进行收藏
+    if moviecol == 0:
+        moviecol = Moviecol(
+            user_id=int(uid),
+            movie_id=int(mid)
+        )
+        db.session.add(moviecol)
+        db.session.commit()
+        data = dict(ok=1)
+    import json
+    return json.dumps(data)
 
 
 @home.route("/<int:page>/", methods=["GET"])
@@ -306,7 +352,7 @@ def search(page=None):
     return render_template("home/search.html", movie_count=movie_count, key=key, page_data=page_data)
 
 
-@home.route("/play/<int:id>/")
+@home.route("/play/<int:id>/<int:page>", methods=["GET", "POST"])
 def play(id=None, page=None):
     """
         播放电影
@@ -327,8 +373,8 @@ def play(id=None, page=None):
         User.id == Comment.user_id
     ).order_by(
         Comment.addtime.desc()
-    ).paginate(page=page, per_page=10)
-    form = CommentForm() #评论表单
+    ).paginate(page=page, per_page=5)
+    form = CommentForm()  # 评论表单
     if "user" in session and form.validate_on_submit():
         data = form.data
         comment = Comment(
@@ -392,3 +438,52 @@ def video(id=None, page=None):
     db.session.add(movie)
     db.session.commit()
     return render_template("home/video.html", movie=movie, form=form, page_data=page_data)
+
+
+@home.route("/tm/", methods=["GET", "POST"])
+def tm():
+    """
+    弹幕消息处理
+    """
+    import json
+    if request.method == "GET":
+        # 获取弹幕消息队列
+        id = request.args.get('id')
+        # 存放在redis队列中的键值
+        key = "movie" + str(id)
+        if rd.llen(key):
+            msgs = rd.lrange(key, 0, 2999)
+            res = {
+                "code": 1,
+                "danmaku": [json.loads(v) for v in msgs]
+            }
+        else:
+            res = {
+                "code": 1,
+                "danmaku": []
+            }
+        resp = json.dumps(res)
+    if request.method == "POST":
+        # 添加弹幕
+        data = json.loads(request.get_data())
+        msg = {
+            "__v": 0,
+            "author": data["author"],
+            "time": data["time"],
+            "text": data["text"],
+            "color": data["color"],
+            "type": data['type'],
+            "ip": request.remote_addr,
+            "_id": datetime.datetime.now().strftime("%Y%m%d%H%M%S") + uuid.uuid4().hex,
+            "player": [
+                data["player"]
+            ]
+        }
+        res = {
+            "code": 1,
+            "data": msg
+        }
+        resp = json.dumps(res)
+        # 将添加的弹幕推入redis的队列中
+        rd.lpush("movie" + str(data["player"]), json.dumps(msg))
+    return Response(resp, mimetype='application/json')
