@@ -81,9 +81,9 @@ class MovieForm(FlaskForm):
         })
     url = FileField(
         label="文件",
-        validators=[
-            DataRequired("请上传文件")
-        ],
+        # validators=[
+        #     DataRequired("请上传文件")
+        # ],
         description="文件",
     )
     info = TextAreaField(
