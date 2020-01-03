@@ -228,7 +228,6 @@ def moviecol(page=None):
 @home.route("/moviecol/add/", methods=["GET"])
 @user_login_req
 def moviecol_add():
-    pass
     """
     添加电影收藏
     """
@@ -448,7 +447,7 @@ def tm():
     import json
     if request.method == "GET":
         # 获取弹幕消息队列
-        id = request.args.get('id')
+        id = request.args.get('id') ## movie.id
         # 存放在redis队列中的键值
         key = "movie" + str(id)
         if rd.llen(key):

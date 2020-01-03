@@ -6,7 +6,7 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1 , user-scalable=no">
-    <title>微电影</title>
+    <title>某柠檬</title>
     <link rel="shortcut icon" href="{{ url_for('static',filename='base/images/logo.png') }}">
     <link rel="stylesheet" href="{{ url_for('static',filename='base/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static',filename='base/css/bootstrap-movie.css') }}">
@@ -20,6 +20,12 @@
                 padding:3px;
                 border:1px solid #ccc
             }
+         body{
+            background-image: url({{ url_for('static',filename='base/images/5.jpg') }});
+            background-size: cover;
+            cursor:url({{ url_for('static',filename='base/css/mouse_chicken.ico') }}),auto;
+        /*!*更改鼠标样式*!#}*/
+        }
         </style>
 {% block css %} {% endblock %}
 </head>
@@ -36,7 +42,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a href="{{ url_for('home.index',page=1) }}" class="navbar-brand" style="width:250px;">
-                <img src="{{ url_for('static',filename='base/images/logo.png') }}" style="height:30px;">&nbsp;微电影
+                <img src="{{ url_for('static',filename='base/images/logo.png') }}" style="height:30px;">&nbsp;某柠檬
             </a>
         </div>
         <!--小屏幕导航按钮和logo-->

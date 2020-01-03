@@ -6,11 +6,17 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1 , user-scalable=no">
-    <title>微电影</title>
-    <link rel="shortcut icon" href="{{ url_for('static',filename='base/images/logo.png') }}">
+    <title>某柠檬</title>
+    <link rel="shortcut icon" href="{{ url_for('static',filename='base/images/logo4.png') }}">
     <link rel="stylesheet" href="{{ url_for('static',filename='base/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static',filename='base/css/bootstrap-movie.css') }}">
     <link rel="stylesheet" href="{{ url_for('static',filename='base/css/animate.css') }}">
+
+     <link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='music/css/player.css') }}">
+
+<script src="//libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="{{ url_for('static',filename='base/js/jquery.goup.min.js') }}"></script>
+
     <style>
         .navbar-brand>img {
             display: inline;
@@ -18,6 +24,11 @@
         .media{
             padding:3px;
             border:1px solid #ccc
+        }
+         body{
+            background-image: url({{ url_for('static',filename='base/images/5.jpg') }});
+            background-size: cover;
+            /*{#cursor:url({{ url_for('static',filename='base/css/mouse_chicken.ico') }}),auto;  !*更改鼠标样式*!#}*/
         }
     </style>
     {% block css %} {%endblock%}
@@ -35,7 +46,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a href="{{ url_for('home.index',page=1) }}" class="navbar-brand" style="width:250px;">
-                <img src="{{ url_for('static',filename='base/images/logo.png') }}" style="height:30px;">&nbsp;微电影
+                <img src="{{ url_for('static',filename='base/images/logo.png') }}" style="height:30px;">&nbsp某柠檬
             </a>
         </div>
         <!--小屏幕导航按钮和logo-->
@@ -103,17 +114,51 @@
     })
 
 </script>
+<!--<script>-->
+<!--    $(document).ready(function() {-->
+<!--        $("img.lazy").lazyload({-->
+<!--            effect: "fadeIn"-->
+<!--        });-->
+<!--         $("#do_search").click(function () {-->
+<!--            var key = $("#key_movie").val();-->
+<!--            location.href = "{{ url_for('home.search',page=1) }}?key="+key;-->
+<!--        });-->
+<!--    });-->
+
+<!--</script>-->
 <script>
-    $(document).ready(function() {
+    {#$(document).ready(function () {#}
         $("img.lazy").lazyload({
             effect: "fadeIn"
         });
-         $("#do_search").click(function () {
-            var key = $("#key_movie").val();
-            location.href = "{{ url_for('home.search',page=1) }}?key="+key;
+        {#点击搜索,触发事件,跳转到搜索页面#}
+        $('#do_search').click(function () {
+            var key = $('#key_movie').val();
+            location.href = '{{ url_for('home.search',page=1) }}?key=' + key;
         });
-    });
+        $.goup({
+            trigger: 100,
+            bottomOffset: 30, /*图标距离底边的边距*/
+            locationOffset: 30, /*图标距离右边的边距*/
+            title: '', /*图标下面的文字*/
+            titleAsText: true
+        });
+</script>
 
+
+<!--引入返回顶部的js文件-->
+    <script src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='base/js/jquery.goup.min.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.goup({
+                trigger: 100,
+                bottomOffset: 30, /*图标距离底边的边距*/
+                locationOffset: 20, /*图标距离右边的边距*/
+                title: '', /*图标下面的文字*/
+                titleAsText: true
+            });
+        });
 </script>
 
 <% block js %>
