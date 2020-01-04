@@ -46,8 +46,11 @@ def change_filename(filename):
     """
     修改上传文件名称
     """
+    print("name",filename)
     fileinfo = os.path.splitext(filename)
+    print(fileinfo)
     filename = datetime.datetime.now().strftime("%Y%m%d%H%M%S") + str(uuid.uuid4().hex) + list(fileinfo)[-1]
+    print(filename)
     return filename
 
 
@@ -205,17 +208,27 @@ def movie_add():
         if tag == 1:
             flash("名称已经存在!", "err")
             return redirect(url_for('admin.movie_add'))
+        print("n",form.url.data.filename)
+        print("logo",form.logo.data.filename)
         file_url = secure_filename(form.url.data.filename)  # 更改文件名
         file_logo = secure_filename(form.logo.data.filename)
-        if not os.path.exists(app.config["UP_DIR"]):
+        print(file_url)
+        print(file_logo)
+        if not os.path.exists(app.config["MOVIE_DIR"]):
             # 创建一个多级目录
-            os.makedirs(app.config["UP_DIR"])
-            os.chmod(app.config["UP_DIR"], "rw")
+            os.makedirs(app.config["MOVIE_DIR"])
+            os.chmod(app.config["MOVIE_DIR"], "rw")
+        if not os.path.exists(app.config["MOVIE_LOGO_DIR"]):
+            # 创建一个多级目录
+            os.makedirs(app.config["MOVIE_LOGO_DIR"])
+            os.chmod(app.config["MOVIE_LOGO_DIR"], "rw")
+
         url = change_filename(file_url)
+        url=url+".mp4"
         logo = change_filename(file_logo)
         # 保存
-        form.url.data.save(app.config["UP_DIR"] + url)
-        form.logo.data.save(app.config["UP_DIR"] + logo)
+        form.url.data.save(app.config["MOVIE_DIR"] + url)
+        form.logo.data.save(app.config["MOVIE_LOGO_DIR"] + logo)
         # url,logo为上传视频,图片之后获取到的地址
         movie = Movie(
             title=str(data["title"]),
@@ -276,24 +289,31 @@ def movie_edit(id=None):
         data = form.data
         movie_count = Movie.query.filter_by(title=data["title"]).count()  # 根据表单提交的title查找
         # 存在表单提交的值，并且不等于数据库的存在的title,则无需重复提交。
+        old_movie_url=movie.url
+        old_movie_logo = movie.logo
         if movie_count == 1 and movie.title != data["title"]:
             flash("片名已经存在！", "err")
             return redirect(url_for('admin.movie_edit', id=id))
         # 创建目录
-        if not os.path.exists(app.config["UP_DIR"]):
-            os.makedirs(app.config["UP_DIR"])
-            os.chmod(app.config["UP_DIR"], "rw")
+        if not os.path.exists(app.config["MOVIE_DIR"]):
+            os.makedirs(app.config["MOVIE_DIR"])
+            os.chmod(app.config["MOVIE_DIR"], "rw")
+        if not os.path.exists(app.config["MOVIE_LOGO_DIR"]):
+            # 创建一个多级目录
+            os.makedirs(app.config["MOVIE_LOGO_DIR"])
+            os.chmod(app.config["MOVIE_LOGO_DIR"], "rw")
         # 上传视频
         if form.url.data != "":
             file_url = secure_filename(form.url.data.filename)
             movie.url = change_filename(file_url)
-            form.url.data.save(app.config["UP_DIR"] + movie.url)
+            form.url.data.save(app.config["MOVIE_DIR"] + movie.url)
+            os.remove(app.config["MOVIE_DIR"] + old_movie_url)
         # 上传图片
         if form.logo.data != "":
             file_logo = secure_filename(form.logo.data.filename)
             movie.logo = change_filename(file_logo)
-            form.logo.data.save(app.config["UP_DIR"] + movie.logo)
-
+            form.logo.data.save(app.config["MOVIE_LOGO_DIR"] + movie.logo)
+            os.remove(app.config["MOVIE_LOGO_DIR"] + old_movie_logo)  # 删除旧电影logo
         movie.star = data["star"]
         movie.tag_id = data["tag_id"]
         movie.info = data["info"]
@@ -318,7 +338,7 @@ def movie_del(id=None):
     movie = Movie.query.get_or_404(id)
     db.session.delete(movie)
     db.session.commit()
-    os.remove(app.config["UP_DIR"] + movie.url)  # 删除本地电影
+    os.remove(app.config["MOVIE_DIR"] + movie.url)  # 删除本地电影
     flash("电影删除成功", "ok")
     return redirect(url_for('admin.movie_list', page=1))
 
@@ -333,11 +353,11 @@ def preview_add():
     if form.validate_on_submit():
         data = form.data
         file_logo = secure_filename(form.logo.data.filename)
-        if not os.path.exists(app.config["UP_DIR"]):
-            os.makedirs(app.config["UP_DIR"])
-            os.chmod(app.config["UP_DIR"], "rw")
+        if not os.path.exists(app.config["PREVIEW_UP_DIR"]):
+            os.makedirs(app.config["PREVIEW_UP_DIR"])
+            os.chmod(app.config["PREVIEW_UP_DIR"], "rw")
         logo = change_filename(file_logo)
-        form.logo.data.save(app.config["UP_DIR"] + logo)
+        form.logo.data.save(app.config["PREVIEW_UP_DIR"] + logo)
         preview = Preview(
             title=data["title"],
             logo=logo
@@ -376,7 +396,7 @@ def preview_del(id=None):
     db.session.delete(preview)
     db.session.commit()
     flash("预告删除成功", "ok")
-    os.remove(app.config["UP_DIR"] + old_logo)  # 删除旧预告logo
+    os.remove(app.config["PREVIEW_UP_DIR"] + old_logo)  # 删除旧预告logo
     return redirect(url_for('admin.preview_list', page=1))
 
 
@@ -399,12 +419,12 @@ def preview_edit(id):
         if form.logo.data != "":  # 更换logo
             file_logo = secure_filename(form.logo.data.filename)
             preview.logo = change_filename(file_logo)  # 换名字
-            form.logo.data.save(app.config["UP_DIR"] + preview.logo)
+            form.logo.data.save(app.config["PREVIEW_UP_DIR"] + preview.logo)
         preview.title = data["title"]
         db.session.add(preview)
         db.session.commit()
         flash("修改预告成功！", "ok")
-        os.remove(app.config["UP_DIR"] + old_logo)  # 删除旧预告logo
+        os.remove(app.config["PREVIEW_UP_DIR"] + old_logo)  # 删除旧预告logo
         return redirect(url_for('admin.preview_edit', id=id))
     return render_template("admin/preview_edit.html", form=form, preview=preview)
 
@@ -444,6 +464,7 @@ def user_del(id=None):
     删除会员
     """
     # # # 因为删除当前页。假如是最后一页，这一页已经不见了。回不到。
+
     from_page = int(request.args.get('fp')) - 1
     # # 此处考虑全删完了，没法前挪的情况，0被视为false
     if not from_page:

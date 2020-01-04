@@ -70,7 +70,7 @@
                                 &nbsp;
                                 <a class="label label-warning">冻结</a>
                                 &nbsp;
-                                <a class="label label-danger"  href="{{ url_for('admin.user_del',id=v.id)}}">删除</a>
+                                <a class="label label-danger"  href="{{ url_for('admin.user_del',id=v.id, fp=page_data.page)}}">删除</a>
                             </td>
                         </tr>
                         {% endfor %}

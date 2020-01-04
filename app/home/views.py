@@ -252,7 +252,6 @@ def moviecol_add():
     import json
     return json.dumps(data)
 
-
 @home.route("/<int:page>/", methods=["GET"])
 @home.route("/", methods=["GET"])
 def index(page=None):
@@ -324,11 +323,10 @@ def animation():
        首页轮播动画
        """
     data = Preview.query.all()
+    # for v in data:
+    #     v.id = v.id - 1
     print(data)
-    for v in data:
-        v.id = v.id - 1
-
-    return render_template("home/animation.html", data=data)
+    return render_template("home/animation.html", data=data[:5])
 
 
 @home.route("/search/<int:page>/")
