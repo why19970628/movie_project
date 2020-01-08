@@ -12,7 +12,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:123456@localhost/m
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.config['SECRET_KEY'] = '5728441192754541acd7a3ef681b3bbb'
 app.config["REDIS_URL"] = "redis://127.0.0.1:6379/0"
-app.config['SECRET_KEY'] = 'mtianyan_movie'
 #上传绝对路径
 app.config["PREVIEW_UP_DIR"] = os.path.join(os.path.abspath(os.path.dirname(__file__)),"static/uploads/main_banner/")
 app.config["MOVIE_LOGO_DIR"] = os.path.join(os.path.abspath(os.path.dirname(__file__)),"static/uploads/movie_logo/")

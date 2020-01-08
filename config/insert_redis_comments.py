@@ -32,4 +32,4 @@ for line in ips:
     resp = json.dumps(res)
     # 将添加的弹幕推入redis的队列中
     print(json.dumps(msg))
-    client.lpush("movie39", json.dumps(msg))
+    client.lpush("movie38", json.dumps(msg))
