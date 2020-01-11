@@ -36,7 +36,7 @@
                         <div class="form-group">
                             <label for="input_title">{{ form.title.label }}</label>
                             <!--                            <input type="text" class="form-control" id="input_title" placeholder="请输入片名！">-->
-                            {{ form.title }}
+                            {{ form.title(required=False) }}
                             {% for err in form.title.errors %}
                             <div class="col-md-12">
                                 <p style="color: red">{{ err }}</p>
@@ -46,7 +46,7 @@
                         <div class="form-group">
                             <label for="input_url">{{ form.url.label }}</label>
                             <!--                            <input type="file" id="input_url">-->
-                            {{ form.url }}
+                            {{ form.url(required=False) }}
                             {% for err in form.url.errors %}
                             <div class="col-md-12">
                                 <p style="color: red">{{ err }}</p>
@@ -59,7 +59,7 @@
                         <div class="form-group">
                             <label for="input_info">{{ form.info.label }}</label>
                             <!--                            <textarea class="form-control" rows="10" id="input_info"></textarea>-->
-                            {{ form.info }}
+                            {{ form.info(required=False) }}
                             {% for err in form.info.errors %}
                             <div class="col-md-12">
                                 <p style="color: red">{{ err }}</p>
@@ -69,7 +69,7 @@
                         <div class="form-group">
                             <label for="input_logo">{{ form.logo.label }}</label>
                             <!--                            <input type="file" id="input_logo">-->
-                            {{ form.logo }}
+                            {{ form.logo(required=False) }}
                             {% for err in form.logo.errors %}
                             <div class="col-md-12">
                                 <p style="color: red">{{ err }}</p>
@@ -81,7 +81,7 @@
                         <div class="form-group">
                             <label for="input_star">{{ form.star.label }}</label>
                             <!--                            <select class="form-control" id="input_star">-->
-                            {{ form.star }}
+                            {{ form.star(required=False) }}
                             {% for err in form.star.errors %}
                             <div class="col-md-12">
                                 <p style="color: red">{{ err }}</p>
@@ -96,7 +96,7 @@
                         </div>
                         <div class="form-group">
                             <label for="input_tag_id">{{ form.tag_id.label }}</label>
-                            {{ form.tag_id }}
+                            {{ form.tag_id(required=False) }}
                             {% for err in form.tag_id.errors %}
                             <div class="col-md-12">
                                 <p style="color: red">{{ err }}</p>
@@ -113,7 +113,7 @@
                         <div class="form-group">
                             <label for="input_area">{{ form.area.label }}</label>
                             <!--                            <input type="text" class="form-control" id="input_area" placeholder="请输入地区！">-->
-                            {{ form.area }}
+                            {{ form.area(required=False) }}
                             {% for err in form.area.errors %}
                             <div class="col-md-12">
                                 <p style="color: red">{{ err }}</p>
@@ -123,7 +123,7 @@
                         <div class="form-group">
                             <label for="input_length">{{ form.length.label }}</label>
                             <!--                            <input type="text" class="form-control" id="input_length" placeholder="请输入片长！">-->
-                            {{ form.length }}
+                            {{ form.length(required=False) }}
                             {% for err in form.length.errors %}
                             <div class="col-md-12">
                                 <p style="color: red">{{ err }}</p>
@@ -134,7 +134,7 @@
                             <label for="input_release_time">{{ form.release_time.label }}</label>
                             <!--                            <input type="text" class="form-control" id="input_release_time"-->
                             <!--                                   placeholder="请选择上映时间！">-->
-                            {{ form.release_time }}
+                            {{ form.release_time(required=False) }}
                             {% for err in form.release_time.errors %}
                             <div class="col-md-12">
                                 <p style="color: red">{{ err }}</p>
@@ -159,31 +159,6 @@
 <script src="{{ url_for('static',filename='jwplayer/jwplayer.js') }}"></script>
 <script type="text/javascript">
     jwplayer.key = "P9VTqT/X6TSP4gi/hy1wy23BivBhjdzVjMeOaQ==";
-
-</script>
-<script type="text/javascript">
-    jwplayer("moviecontainer").setup({
-        flashplayer: "{{ url_for('static',filename='jwplayer/jwplayer.flash.swf') }}",
-        playlist: [{
-            file: "{{ url_for('static',filename='video/htpy.mp4') }}",
-            title: "环太平洋"
-        }],
-        modes: [{
-            type: "html5"
-        }, {
-            type: "flash",
-            src: "{{ url_for('static',filename='jwplayer/jwplayer.flash.swf') }}"
-        }, {
-            type: "download"
-        }],
-        skin: {
-            name: "vapor"
-        },
-        "playlist.position": "left",
-        "playlist.size": 200,
-        height: 250,
-        width: 387,
-    });
 
 </script>
 <script>

@@ -322,11 +322,12 @@ def animation():
     """
        首页轮播动画
        """
-    data = Preview.query.all()
+    data = Preview.query.order_by(
+        Preview.addtime.desc()
+    )
     # for v in data:
     #     v.id = v.id - 1
-    print(data)
-    return render_template("home/animation.html", data=data[:5])
+    return render_template("home/animation.html", data=data)
 
 
 @home.route("/search/<int:page>/")

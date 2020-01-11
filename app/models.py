@@ -188,8 +188,8 @@ class Oplog(db.Model):
 #     """
 #     from werkzeug.security import generate_password_hash
 #
-#     admin = Admin(name='wang',
-#                   pwd=generate_password_hash("wang"),
+#     admin = Admin(name='hua',
+#                   pwd=generate_password_hash("hua"),
 #                   is_super=0,
 #                   role_id=1)
 #     db.session.add(admin)

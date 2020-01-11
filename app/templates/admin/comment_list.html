@@ -31,12 +31,18 @@
                 <div class="box-body box-comments">
                     {% for v in page_data.items %}
                     <div class="box-comment">
+                        {% if v.face %}
                         <img class="img-circle img-sm"
                              src="{{ url_for('static',filename='uploads/users/'+v.user.face) }}"
                              alt="User Image">
+                        {% else %}
+                        <img data-src="holder.js/50x50" style="width:50px;" class="img-responsive center-block" alt="">
+
+                        {% endif %}
+
                         <div class="comment-text">
                                     <span class="username">
-                                        {{ v.user.name}}
+                                        <a href="{{ url_for('admin.user_view',id=v.user.id)}}">{{ v.user.name}}</a>
                                         <span class="text-muted pull-right">
                                             <i class="fa fa-calendar" aria-hidden="true"></i>
                                             &nbsp;

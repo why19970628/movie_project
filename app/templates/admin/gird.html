@@ -6,8 +6,8 @@
             <span>首页</span>
             <span class="label label-primary pull-right">1</span>
         </a>
-        <ul class="treeview-menu" >
-            <li  id="g-1-1">
+        <ul class="treeview-menu">
+            <li id="g-1-1">
                 <a href="{{url_for('admin.index') }}">
                     <i class="fa fa-circle-o"></i> 控制面板
                 </a>
@@ -150,7 +150,7 @@
                 </a>
             </li>
             <li id="g-9-2">
-                <a href="{{ url_for('admin.auth_list') }}">
+                <a href="{{ url_for('admin.auth_list',page=1) }}">
                     <i class="fa fa-circle-o"></i> 权限列表
                 </a>
             </li>
@@ -169,7 +169,7 @@
                 </a>
             </li>
             <li id="g-10-2">
-                <a href="{{ url_for('admin.role_list') }}">
+                <a href="{{ url_for('admin.role_list',page=1) }}">
                     <i class="fa fa-circle-o"></i> 角色列表
                 </a>
             </li>
@@ -188,7 +188,7 @@
                 </a>
             </li>
             <li id="g-11-2">
-                <a href="{{ url_for('admin.admin_list') }}">
+                <a href="{{ url_for('admin.admin_list',page=1) }}">
                     <i class="fa fa-circle-o"></i> 管理员列表
                 </a>
             </li>

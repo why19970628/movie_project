@@ -23,7 +23,7 @@
                             <div class="form-group">
                                 <label for="input_name"><span
                                         class="glyphicon glyphicon-user"></span>&nbsp;{{ form.name.label }}</label>
-                                {{ form.name }}
+                                {{ form.name(required=False) }}
                                 {% for err in form.name.errors %}
                                     <div class="col-md-12">
                                         <p style="color: red">{{ err }}</p>
@@ -35,7 +35,7 @@
                             <div class="form-group">
                                 <label for="input_email"><span
                                         class="glyphicon glyphicon-envelope"></span>&nbsp;{{ form.email.label }}</label>
-                                {{ form.email }}
+                                {{ form.email(required=False) }}
                                 {% for err in form.email.errors %}
                                     <div class="col-md-12">
                                         <p style="color: red">{{ err }}</p>
@@ -47,7 +47,7 @@
                             <div class="form-group">
                                 <label for="input_phone"><span
                                         class="glyphicon glyphicon-phone"></span>&nbsp;{{ form.phone.label }}</label>
-                                {{ form.phone }}
+                                {{ form.phone(required=False) }}
                                 {% for err in form.phone.errors %}
                                     <div class="col-md-12">
                                         <p style="color: red">{{ err }}</p>
@@ -59,7 +59,7 @@
                             <div class="form-group">
                                 <label for="input_password"><span
                                         class="glyphicon glyphicon-lock"></span>&nbsp;{{ form.pwd.label }}</label>
-                                {{ form.pwd }}
+                                {{ form.pwd(required=False) }}
                                 {% for err in form.pwd.errors %}
                                     <div class="col-md-12">
                                         <p style="color: red">{{ err }}</p>
@@ -71,7 +71,7 @@
                             <div class="form-group">
                                 <label for="input_repassword"><span
                                         class="glyphicon glyphicon-lock"></span>&nbsp;{{ form.repwd.label }}</label>
-                                {{ form.repwd }}
+                                {{ form.repwd(required=False) }}
                                 {% for err in form.repwd.errors %}
                                     <div class="col-md-12">
                                         <p style="color: red">{{ err }}</p>
